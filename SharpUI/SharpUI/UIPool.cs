@@ -72,7 +72,7 @@ namespace SharpUI {
         /// <returns>True if there is an item in this <see cref="UIPool"/> of the given type which is visible. Otherwise false.</returns>
         public bool IsAnyItemOfTypeVisible<T>()
         {
-            return Items.All(x => x.GetType() == typeof(T) && x.IsVisible);
+            return Items.Any(x => x.GetType() == typeof(T) && x.IsVisible);
         }
 
         /// <summary>
