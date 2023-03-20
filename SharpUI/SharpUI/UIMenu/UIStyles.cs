@@ -133,11 +133,11 @@ namespace SharpUI.UIMenu
         /// <returns>The default <see cref="UIItemStyle"/>.</returns>
         public static UIItemStyle Default()
         {
-            return new UIItemStyle(Color.FromArgb(170, 10, 10, 10),
-                                    Color.White,
-                                    Color.FromArgb(255, 245, 245, 245),
-                                    Color.FromArgb(255, 5, 5, 5),
-                                    Color.FromArgb(255, 150, 150, 150));
+            return new UIItemStyle(Color.FromArgb(170, 10, 10, 10),    // Background
+                                    Color.White,                       // Foreground
+                                    Color.FromArgb(245, 245, 245),     // Selected Background
+                                    Color.FromArgb(5, 5, 5),           // Selected Foreground
+                                    Color.FromArgb(150, 150, 150));    // Disabled Foreground
         }
     }
 
@@ -218,9 +218,12 @@ namespace SharpUI.UIMenu
         /// </summary>
         /// <param name="backgroundColor">The background color.</param>
         /// <param name="foregroundColor">The foreground color.</param>
+        /// <param name="checkboxColor">The checkbox color.</param>
         /// <param name="selectedBackgroundColor">The selected background color.</param>
         /// <param name="selectedForegroundColor">The selected foreground color.</param>
+        /// <param name="selectedCheckboxColor">The selected checkbox color.</param>
         /// <param name="disabledForegroundColor">The disabled foreground color.</param>
+        /// <param name="disabledCheckboxColor">The disabled checkbox color.</param>
         public UICheckboxItemStyle(Color backgroundColor,
             Color foregroundColor,
             Color checkboxColor,
@@ -247,14 +250,14 @@ namespace SharpUI.UIMenu
         /// <returns>The default <see cref="UICheckboxItemStyle"/>.</returns>
         public static UICheckboxItemStyle Default()
         {
-            return new UICheckboxItemStyle(Color.FromArgb(170, 10, 10, 10),
-                                            Color.White,
-                                            Color.White,
-                                            Color.FromArgb(255, 245, 245, 245),
-                                            Color.FromArgb(255, 5, 5, 5),
-                                            Color.FromArgb(255, 5, 5, 5),
-                                            Color.FromArgb(255, 150, 150, 150),
-                                            Color.FromArgb(255, 150, 150, 150));
+            return new UICheckboxItemStyle(Color.FromArgb(170, 10, 10, 10),         // Background
+                                            Color.White,                            // Foreground
+                                            Color.White,                            // Checkbox
+                                            Color.FromArgb(255, 245, 245, 245),     // Selected Background
+                                            Color.FromArgb(255, 5, 5, 5),           // Selected Foreground
+                                            Color.FromArgb(255, 5, 5, 5),           // Selected Checkbox
+                                            Color.FromArgb(255, 150, 150, 150),     // Disabled Foreground
+                                            Color.FromArgb(255, 150, 150, 150));    // Disabled Checkbox
         }
     }
 
@@ -269,6 +272,7 @@ namespace SharpUI.UIMenu
         private Color _fgColor;
         private Color _bgSliderColor;
         private Color _fgSliderColor;
+        private Color _sliderBorderColor;
 
         private Color _selectedBGColor;
         private Color _selectedFGColor;
@@ -277,6 +281,7 @@ namespace SharpUI.UIMenu
 
         private Color _disabledFGColor;
         private Color _disabledFGSliderColor;
+        private Color _disabledSliderBorderColor;
 
         // Properties
         /// <summary>Gets or sets the background color of this item.</summary>
@@ -302,6 +307,12 @@ namespace SharpUI.UIMenu
         {
             get { return _fgSliderColor; }
             set { _fgSliderColor = value; }
+        }
+        /// <summary>Gets or sets the border color of the slider for this item.</summary>
+        public Color SliderBorderColor
+        {
+            get { return _sliderBorderColor; }
+            set { _sliderBorderColor = value; }
         }
 
         /// <summary>Gets or sets the selected background color of this item.</summary>
@@ -341,6 +352,12 @@ namespace SharpUI.UIMenu
             get { return _disabledFGSliderColor; }
             set { _disabledFGSliderColor = value; }
         }
+        /// <summary>Gets or sets the disabled border color of the slider for this item.</summary>
+        public Color DisabledSliderBorderColor
+        {
+            get { return _disabledSliderBorderColor; }
+            set { _disabledSliderBorderColor = value; }
+        }
         #endregion
 
         #region Constructor
@@ -351,33 +368,39 @@ namespace SharpUI.UIMenu
         /// <param name="foregroundColor">The foreground color.</param>
         /// <param name="sliderBackgroundColor">The background color of the slider.</param>
         /// <param name="sliderForegroundColor">The foreground color of the slider.</param>
+        /// <param name="sliderBorderColor">The border color of the slider.</param>
         /// <param name="selectedBackgroundColor">The selected background color.</param>
         /// <param name="selectedForegroundColor">The selected foreground color.</param>
         /// <param name="selectedSliderBackgroundColor">The selected background color of the slider.</param>
         /// <param name="selectedSliderForegroundColor">The selected foreground color of the slider.</param>
         /// <param name="disabledForegroundColor">The disabled foreground color.</param>
-        /// <param name="disabledSliderForegroundColor">The disabled foreground color of the slider..</param>
+        /// <param name="disabledSliderForegroundColor">The disabled foreground color of the slider.</param>
+        /// <param name="disabledSliderBorderColor">The disabled border color of the slider.</param>
         public UISliderItemStyle(Color backgroundColor,
             Color foregroundColor,
             Color sliderBackgroundColor,
             Color sliderForegroundColor,
+            Color sliderBorderColor,
             Color selectedBackgroundColor,
             Color selectedForegroundColor,
             Color selectedSliderBackgroundColor,
             Color selectedSliderForegroundColor,
             Color disabledForegroundColor,
-            Color disabledSliderForegroundColor)
+            Color disabledSliderForegroundColor,
+            Color disabledSliderBorderColor)
         {
             BackgroundColor = backgroundColor;
             ForegroundColor = foregroundColor;
             SliderBackgroundColor = sliderBackgroundColor;
             SliderForegroundColor = sliderForegroundColor;
+            SliderBorderColor = sliderBorderColor;
             SelectedBackgroundColor = selectedBackgroundColor;
             SelectedForegroundColor = selectedForegroundColor;
             SelectedSliderBackgroundColor = selectedSliderBackgroundColor;
             SelectedSliderForegroundColor = selectedSliderForegroundColor;
             DisabledForegroundColor = disabledForegroundColor;
             DisabledSliderForegroundColor = disabledSliderForegroundColor;
+            DisabledSliderBorderColor = disabledSliderBorderColor;
         }
         #endregion
 
@@ -387,16 +410,18 @@ namespace SharpUI.UIMenu
         /// <returns>The default <see cref="UISliderItemStyle"/>.</returns>
         public static UISliderItemStyle Default()
         {
-            return new UISliderItemStyle(Color.FromArgb(170, 10, 10, 10),
-                                    Color.White,
-                                    Color.FromArgb(6, 46, 84),
-                                    Color.FromArgb(51, 116, 204),
-                                    Color.FromArgb(255, 245, 245, 245),
-                                    Color.FromArgb(255, 5, 5, 5),
-                                    Color.FromArgb(6, 46, 84),
-                                    Color.FromArgb(51, 116, 204),
-                                    Color.FromArgb(255, 150, 150, 150),
-                                    Color.FromArgb(100, 100, 100));
+            return new UISliderItemStyle(Color.FromArgb(170, 10, 10, 10),   // Background
+                                    Color.White,                            // Foreground
+                                    Color.FromArgb(40, 40, 40),             // Slider Background
+                                    Color.FromArgb(140, 140, 140),          // Slider Foreground
+                                    Color.Black,                            // Slider Border
+                                    Color.FromArgb(255, 245, 245, 245),     // Selected Background
+                                    Color.FromArgb(255, 5, 5, 5),           // Selected Foreground
+                                    Color.FromArgb(40, 40, 40),             // Selected Slider Background
+                                    Color.FromArgb(240, 160, 0),            // Selected Slider Foreground
+                                    Color.FromArgb(255, 150, 150, 150),     // Disabled Foreground
+                                    Color.FromArgb(100, 100, 100),          // Disabled Slider Foreground
+                                    Color.Black);                           // Disabled Border
         }
     }
 

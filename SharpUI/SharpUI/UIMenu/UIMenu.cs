@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -245,6 +246,16 @@ namespace SharpUI.UIMenu {
         {
             return Items.Where(x => x.Tag != null && x.Tag.ToString() == tag).FirstOrDefault();
         }
+
+        /// <summary>
+        /// Gets all items of this type from the <see cref="Items"/> list of this <see cref="UIMenu"/>.
+        /// </summary>
+        /// <typeparam name="T">The type you want to target.</typeparam>
+        /// <returns>An array of all items in this <see cref="UIMenu"/> that match the given type.</returns>
+        public UIItemBase[] GetItemsOfType<T>()
+        {
+            return Items.Where(x => x.GetType() == typeof(T)).ToArray();
+        }
         #endregion
 
         /// <summary>
@@ -257,7 +268,7 @@ namespace SharpUI.UIMenu {
                 return;
             if (!IsVisible)
                 return;
-
+            
             // Draw only header image, subtitle item and no items item when there are no items in the menu.
             if (Items.Count == 0)
             {
@@ -396,12 +407,12 @@ namespace SharpUI.UIMenu {
             //    }
 
             //    //Rectangle textRect = gfx.MeasureText(null, selectedItem.Description, new Rectangle(p2.X, p2.Y + 10, ItemSize.Width, ItemSize.Height), eD3DFontDrawFlags.Left);
-            //    SizeF size = GetTextSize(selectedItem.Description, ItemSize, out int linesFitted);
+            //    //SizeF size = GetTextSize(selectedItem.Description, ItemSize, out int linesFitted);
 
-            //    linesFitted = ItemSize.Height + linesFitted * ItemSize.Height;
+            //    //linesFitted = ItemSize.Height + linesFitted * ItemSize.Height;
 
-            //    gfx.DrawBoxFilled(gfx.Device, new Vector2(p2.X, p2.Y + 10), new Size(ItemSize.Width, linesFitted), Color.Black);
-            //    gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 10), new Size(ItemSize.Width, linesFitted)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
+            //    gfx.DrawBoxFilled(gfx.Device, new System.Numerics.Vector2(p2.X, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height), Color.Black);
+            //    gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height)), eD3DFontDrawFlags.Left, Color.White);
             //}
         }
 

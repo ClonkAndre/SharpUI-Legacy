@@ -79,7 +79,7 @@ namespace SharpUITest {
                 new UIListItem<string>((object)"TestList1", "test list", UIItemStyle.Default(), (UIMenu menu, UIListItem<string> item) => { ShowSubtitleMessage(item.SelectedText); }, new string[] { "Test Item 1", "Test Item 2", "Test Item 3" }),
                 new UIListItem<int>("test int list", UIItemStyle.Default(), (UIMenu menu, UIListItem<int> item) => { ShowSubtitleMessage(item.SelectedText); }, new int[] { 1, 2, 3 }),
                 new UIItem("Set focus to testMenu2", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu2, true); }),
-                new UIItem("Close all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType(typeof(UIMenu), false); }),
+                new UIItem("Close all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType<UIMenu>(false); }),
                 new UIItem("Close menu", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.SetVisibility(false); })
             });
             testMenu1.SetVisibility(true);

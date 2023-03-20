@@ -69,7 +69,8 @@ namespace SharpUI {
 
         #region Methods
         /// <summary>
-        /// Sets the focus of this <see cref="UIBase"/> element. This also raises the <see cref="FocusChanged"/> event.
+        /// Sets the focus of this <see cref="UIBase"/> element.
+        /// <para>Raises the <see cref="FocusChanged"/> event.</para>
         /// </summary>
         /// <param name="focused">Focused or not.</param>
         public void SetFocus(bool focused)
@@ -79,7 +80,8 @@ namespace SharpUI {
         }
 
         /// <summary>
-        /// Sets the visibility of this <see cref="UIBase"/> element. This also raises the <see cref="VisibilityChanged"/> event.
+        /// Sets the visibility of this <see cref="UIBase"/> element.
+        /// <para>Raises the <see cref="VisibilityChanged"/> event.</para>
         /// </summary>
         /// <param name="visible">Visible or not.</param>
         public void SetVisibility(bool visible)

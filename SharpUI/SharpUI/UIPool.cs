@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 using IVSDKDotNet.Direct3D9;
@@ -40,20 +41,40 @@ namespace SharpUI {
         }
 
         /// <summary>
-        /// Changes the visibility of every item in this <see cref="UIPool"/> but only of this <see cref="Type"/>.
+        /// Changes the visibility of every item in this <see cref="UIPool"/> but only of the given type.
         /// This allows you to easily show/hide, for example, all of your <see cref="UIMenu.UIMenu"/>'s at once.
         /// </summary>
-        /// <param name="targetType">The type you want to target.</param>
+        /// <typeparam name="T">The type you want to target.</typeparam>
         /// <param name="visible">The new visibility for every item in this <see cref="UIPool"/> that match the type.</param>
-        public void ChangeVisibilityOfEveryElementOfType(Type targetType, bool visible)
+        public void ChangeVisibilityOfEveryElementOfType<T>(bool visible)
         {
             Items.ForEach(x => {
-                if (x.GetType() == targetType) x.SetVisibility(visible);
+                if (x.GetType() == typeof(T)) x.SetVisibility(visible);
             });
         }
         #endregion
 
         #region Functions
+        /// <summary>
+        /// Gets all items of this type from the <see cref="Items"/> list of this <see cref="UIPool"/>.
+        /// </summary>
+        /// <typeparam name="T">The type you want to target.</typeparam>
+        /// <returns>An array of all items in this <see cref="UIPool"/> that match the given type.</returns>
+        public UIBase[] GetItemsOfType<T>()
+        {
+            return Items.Where(x => x.GetType() == typeof(T)).ToArray();
+        }
+
+        /// <summary>
+        /// Gets if any item of the given type in this <see cref="UIPool"/> is visible or not.
+        /// </summary>
+        /// <typeparam name="T">The type you want to target.</typeparam>
+        /// <returns>True if there is an item in this <see cref="UIPool"/> of the given type which is visible. Otherwise false.</returns>
+        public bool IsAnyItemOfTypeVisible<T>()
+        {
+            return Items.All(x => x.GetType() == typeof(T) && x.IsVisible);
+        }
+
         /// <summary>
         /// Sets if the given item should have the focus or not. If yes, then all other items inside this <see cref="UIPool"/> loose their focus.
         /// </summary>
