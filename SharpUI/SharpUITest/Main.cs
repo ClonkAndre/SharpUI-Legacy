@@ -11,7 +11,6 @@ using SharpUI.UIMenu;
 
 using IVSDKDotNet;
 using IVSDKDotNet.Direct3D9;
-using SharpUI.UIMenu.Items;
 
 namespace SharpUITest {
     public class Main : Script {

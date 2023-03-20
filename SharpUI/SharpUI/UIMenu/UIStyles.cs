@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
 
-using SharpUI.UIMenu.Items;
-
 namespace SharpUI.UIMenu
 {
 

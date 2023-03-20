@@ -7,7 +7,7 @@ using IVSDKDotNet.Direct3D9;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
-namespace SharpUI.UIMenu.Items {
+namespace SharpUI.UIMenu {
     /// <summary>
     /// Slider menu item for the <see cref="UIMenu"/>.
     /// </summary>

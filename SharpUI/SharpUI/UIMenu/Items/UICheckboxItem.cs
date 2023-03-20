@@ -19,7 +19,7 @@ namespace SharpUI.UIMenu {
         public new UICheckboxItemStyle Style;
 
         private string _itemText;
-        private bool _isChecked = true;
+        private bool _isChecked;
         private Action<UIMenu, UICheckboxItem> _onClickAction;
 
         // Properties
