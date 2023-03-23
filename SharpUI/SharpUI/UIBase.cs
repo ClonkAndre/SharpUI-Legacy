@@ -30,7 +30,7 @@ namespace SharpUI {
         public bool IsVisible
         {
             get { return _isVisible; }
-            private set { _isVisible = value; }
+            internal set { _isVisible = value; }
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace SharpUI {
         public bool HasFocus
         {
             get { return _hasFocus; }
-            private set { _hasFocus = value; }
+            internal set { _hasFocus = value; }
         }
 
         /// <summary>
@@ -100,8 +100,10 @@ namespace SharpUI {
         /// <summary>
         /// Responsible for handling key presses.
         /// </summary>
-        /// <param name="args">The <see cref="KeyEventArgs"/> from either the <see cref="IVSDKDotNet.Script.KeyDown"/> or <see cref="IVSDKDotNet.Script.KeyUp"/> method.</param>
-        public abstract void KeyPress(KeyEventArgs args);
+        /// <param name="args">The <see cref="KeyEventArgs"/> from either the <see cref="IVSDKDotNet.Script.KeyUp"/> or <see cref="IVSDKDotNet.Script.KeyDown"/> event.</param>
+        /// <param name="isKeyUpEvent">If this method is being called from the <see cref="IVSDKDotNet.Script.KeyUp"/> event, this should be set to true.</param>
+        /// <param name="shouldBeUsedForNavigation">Sets if this key press should be used for navigating. When called from both, the <see cref="IVSDKDotNet.Script.KeyUp"/> or <see cref="IVSDKDotNet.Script.KeyDown"/> event, you should only set this to true once.</param>
+        public abstract void KeyPress(KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation);
 
         /// <summary>
         /// Performs some cleaning up actions.

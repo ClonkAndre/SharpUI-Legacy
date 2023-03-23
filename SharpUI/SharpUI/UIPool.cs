@@ -105,7 +105,7 @@ namespace SharpUI {
         #endregion
 
         /// <summary>
-        /// Responsible for drawing every element in the <see cref="Items"/> list.
+        /// Responsible for drawing the all items in this <see cref="UIPool"/>.
         /// </summary>
         /// <param name="gfx">The <see cref="D3DGraphics"/> object needed for drawing.</param>
         public void ProcessDrawing(D3DGraphics gfx)
@@ -117,10 +117,12 @@ namespace SharpUI {
         }
 
         /// <summary>
-        /// Responsible for handling key presses for every element in the <see cref="Items"/> list.
+        /// Responsible for handling key down events.
         /// </summary>
-        /// <param name="args">The <see cref="KeyEventArgs"/> from either the <see cref="IVSDKDotNet.Script.KeyDown"/> or <see cref="IVSDKDotNet.Script.KeyUp"/> method.</param>
-        public void ProcessKeys(KeyEventArgs args)
+        /// <param name="args">The <see cref="KeyEventArgs"/> from the <see cref="IVSDKDotNet.Script.KeyDown"/> method.</param>
+        /// <param name="isKeyUpEvent">If this method is being called from the <see cref="IVSDKDotNet.Script.KeyUp"/> event, this should be set to true.</param>
+        /// <param name="shouldBeUsedForNavigation">Sets if this key press should be used for navigating. When called from both, the <see cref="IVSDKDotNet.Script.KeyUp"/> or <see cref="IVSDKDotNet.Script.KeyDown"/> event, you should only set this to true once.</param>
+        public void ProcessKeys(KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
             if (args == null)
                 return;
@@ -130,7 +132,7 @@ namespace SharpUI {
                 UIBase item = Items[i];
                 if (item.HasFocus)
                 {
-                    item.KeyPress(args);
+                    item.KeyPress(args, isKeyUpEvent, shouldBeUsedForNavigation);
                     break;
                 }
             }

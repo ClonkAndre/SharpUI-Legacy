@@ -4,13 +4,16 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 using System.Windows.Forms;
 
 using SharpUI;
+using SharpUI.UI;
 using SharpUI.UIMenu;
 
 using IVSDKDotNet;
 using IVSDKDotNet.Direct3D9;
+using IVSDKDotNet.Native;
 
 namespace SharpUITest {
     public class Main : Script {
@@ -20,6 +23,7 @@ namespace SharpUITest {
 
         private UIPool pool;
 
+        private UIList testUIList1;
         private UIMenu testMenu1, testMenu2, testMenu3;
         private D3DResource menuImage;
         #endregion
@@ -58,6 +62,14 @@ namespace SharpUITest {
             pool = new UIPool();
 
 
+            // Create a new UIList
+            testUIList1 = new UIList(new Point(10, 500), new UIList.Entry[] {
+                new UIList.Entry("Test123"),
+                new UIList.Entry(Color.Red, "Red item!"),
+                new UIList.Entry((UIList.Entry entry) => { return "Mouse Sensitivity: " + Natives.GET_MOUSE_SENSITIVITY(); }),
+            });
+
+
             // Creates a new UIMenu
             testMenu1 = new UIMenu("Title", "Subtitle", UIMenuOptions.Default(), new Point(100, 100), menuImage, new UIItemBase[] {
                 new UIItem("test item 1 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "Just a test to test if the text will fit properly, and will go to the new-line if cut-off.", UIItemStyle.Default(), null),
@@ -77,6 +89,7 @@ namespace SharpUITest {
                 new UISliderItem("Slider item", 5, UISliderItemStyle.Default(), (UIMenu menu, UISliderItem item) => { ShowSubtitleMessage("Value: " + item.Value.ToString()); }),
                 new UIListItem<string>((object)"TestList1", "test list", UIItemStyle.Default(), (UIMenu menu, UIListItem<string> item) => { ShowSubtitleMessage(item.SelectedText); }, new string[] { "Test Item 1", "Test Item 2", "Test Item 3" }),
                 new UIListItem<int>("test int list", UIItemStyle.Default(), (UIMenu menu, UIListItem<int> item) => { ShowSubtitleMessage(item.SelectedText); }, new int[] { 1, 2, 3 }),
+                new UIIntegerUpDownItem("test int up/down item", UIItemStyle.Default(), (UIMenu menu, UIIntegerUpDownItem item) => { ShowSubtitleMessage(item.Value.ToString()); }),
                 new UIItem("Set focus to testMenu2", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu2, true); }),
                 new UIItem("Close all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType<UIMenu>(false); }),
                 new UIItem("Close menu", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.SetVisibility(false); })
@@ -116,6 +129,8 @@ namespace SharpUITest {
             pool.Items.Add(testMenu2);
             pool.Items.Add(testMenu3);
 
+            // Adds the UIList to the UIPool.
+            pool.Items.Add(testUIList1);
 
             // Set the focus to the testMenu so it can receive key inputs.
             pool.SetFocus(testMenu1, true);
@@ -145,12 +160,12 @@ namespace SharpUITest {
         private void Main_KeyUp(object sender, KeyEventArgs e)
         {
             // Process key presses for all elements that are in the pool.
-            pool.ProcessKeys(e);
+            pool.ProcessKeys(e, true, true);
         }
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
             // Process key presses for all elements that are in the pool.
-            //pool.ProcessKeys(e);
+            pool.ProcessKeys(e, false, false);
         }
 
     }

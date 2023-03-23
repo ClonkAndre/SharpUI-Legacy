@@ -293,21 +293,24 @@ namespace SharpUI.UIMenu {
         }
 
         /// <inheritdoc/>
-        public override void KeyPress(UIMenu menu, KeyEventArgs args)
+        public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
             if (IsEnabled)
             {
-                if (args.KeyCode == menu.Options.AcceptKey)
+                if (shouldBeUsedForNavigation)
                 {
-                    OnClick?.Invoke(menu, this);
-                }
-                if (args.KeyCode == menu.Options.NavigateLeft)
-                {
-                    if (CanValueBeChanged) Value--;
-                }
-                if (args.KeyCode == menu.Options.NavigateRight)
-                {
-                    if (CanValueBeChanged) Value++;
+                    if (args.KeyCode == menu.Options.AcceptKey)
+                    {
+                        OnClick?.Invoke(menu, this);
+                    }
+                    if (args.KeyCode == menu.Options.NavigateLeft)
+                    {
+                        if (CanValueBeChanged) Value--;
+                    }
+                    if (args.KeyCode == menu.Options.NavigateRight)
+                    {
+                        if (CanValueBeChanged) Value++;
+                    }
                 }
             }
         }

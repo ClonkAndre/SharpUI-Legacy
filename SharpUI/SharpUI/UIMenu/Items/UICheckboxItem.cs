@@ -179,14 +179,17 @@ namespace SharpUI.UIMenu {
         }
 
         /// <inheritdoc/>
-        public override void KeyPress(UIMenu menu, KeyEventArgs args)
+        public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
             if (IsEnabled)
             {
-                if (args.KeyCode == menu.Options.AcceptKey)
+                if (shouldBeUsedForNavigation)
                 {
-                    IsChecked = !IsChecked;
-                    OnClick?.Invoke(menu, this);
+                    if (args.KeyCode == menu.Options.AcceptKey)
+                    {
+                        IsChecked = !IsChecked;
+                        OnClick?.Invoke(menu, this);
+                    }
                 }
             }
         }

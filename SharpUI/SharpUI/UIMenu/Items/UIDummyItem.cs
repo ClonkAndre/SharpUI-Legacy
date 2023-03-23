@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
+
 using IVSDKDotNet.Direct3D9;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -14,7 +15,7 @@ namespace SharpUI.UIMenu {
         {
 
         }
-        public override void KeyPress(UIMenu menu, KeyEventArgs args)
+        public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
 
         }

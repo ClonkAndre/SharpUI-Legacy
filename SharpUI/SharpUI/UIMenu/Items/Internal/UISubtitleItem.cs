@@ -30,7 +30,7 @@ namespace SharpUI.UIMenu {
             gfx.DrawString(gfx.Device, menu.FontOverride, string.Format("{0} / {1}", ItemCount == 0 ? "0" : SelectedIndex.ToString(), ItemCount.ToString()), new Rectangle(pos, new Size(menu.ItemSize.Width - 5, menu.ItemSize.Height)), eD3DFontDrawFlags.Right | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
         }
 
-        public override void KeyPress(UIMenu menu, KeyEventArgs args)
+        public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
 
         }

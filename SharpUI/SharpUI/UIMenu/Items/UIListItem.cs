@@ -26,7 +26,7 @@ namespace SharpUI.UIMenu {
         private Action<UIMenu, UIListItem<T>> _onClickAction;
 
         // Properties
-        /// <summary>Gets or set the text of this <see cref="UIItem"/>.</summary>
+        /// <summary>Gets or set the text of this <see cref="UIListItem{T}"/>.</summary>
         public string Text
         {
             get { return _itemText; }
@@ -60,7 +60,7 @@ namespace SharpUI.UIMenu {
             }
         }
 
-        /// <summary>Gets or sets the <see cref="Action"/> that should be executed when the user presses this <see cref="UIItem"/>.</summary>
+        /// <summary>Gets or sets the <see cref="Action"/> that should be executed when the user presses this <see cref="UIListItem{T}"/>.</summary>
         public Action<UIMenu, UIListItem<T>> OnClick
         {
             get { return _onClickAction; }
@@ -201,6 +201,7 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
+        /// <inheritdoc/>
         public override void Draw(UIMenu menu, D3DGraphics gfx, Point pos)
         {
             Rectangle textRect = new Rectangle(new Point(pos.X + 5, pos.Y), new Size(menu.ItemSize.Width - 10, menu.ItemSize.Height));
@@ -271,21 +272,25 @@ namespace SharpUI.UIMenu {
             }
         }
 
-        public override void KeyPress(UIMenu menu, KeyEventArgs args)
+        /// <inheritdoc/>
+        public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
             if (IsEnabled)
             {
-                if (args.KeyCode == menu.Options.AcceptKey)
+                if (shouldBeUsedForNavigation)
                 {
-                    OnClick?.Invoke(menu, this);
-                }
-                if (args.KeyCode == menu.Options.NavigateLeft)
-                {
-                    NavigateLeft();
-                }
-                if (args.KeyCode == menu.Options.NavigateRight)
-                {
-                    NavigateRight();
+                    if (args.KeyCode == menu.Options.AcceptKey)
+                    {
+                        OnClick?.Invoke(menu, this);
+                    }
+                    if (args.KeyCode == menu.Options.NavigateLeft)
+                    {
+                        NavigateLeft();
+                    }
+                    if (args.KeyCode == menu.Options.NavigateRight)
+                    {
+                        NavigateRight();
+                    }
                 }
             }
         }

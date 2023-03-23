@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="UIBase.cs" />
     <Compile Include="UIMenu\Items\UICheckboxItem.cs" />
+    <Compile Include="UIMenu\Items\UIIntegerUpDownItem.cs" />
     <Compile Include="UIMenu\Items\UIItemBase.cs" />
     <Compile Include="UIMenu\Items\UIListItem.cs" />
     <Compile Include="UIMenu\Items\Internal\UISubtitleItem.cs" />
@@ -57,6 +58,8 @@
     <Compile Include="UIMenu\UIMenuOptions.cs" />
     <Compile Include="UIMenu\UIStyles.cs" />
     <Compile Include="UIPool.cs" />
+    <Compile Include="UI\UIList.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

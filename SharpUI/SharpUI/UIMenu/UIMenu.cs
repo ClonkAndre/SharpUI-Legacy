@@ -258,10 +258,7 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
-        /// <summary>
-        /// Responsible for drawing this <see cref="UIMenu"/> and all items.
-        /// </summary>
-        /// <param name="gfx">The <see cref="D3DGraphics"/> object needed for drawing.</param>
+        /// <inheritdoc/>
         public override void Draw(D3DGraphics gfx)
         {
             if (gfx == null)
@@ -416,11 +413,8 @@ namespace SharpUI.UIMenu {
             //}
         }
 
-        /// <summary>
-        /// Responsible for navigating through this <see cref="UIMenu"/>.
-        /// </summary>
-        /// <param name="args">The <see cref="KeyEventArgs"/> from either the <see cref="IVSDKDotNet.Script.KeyDown"/> or <see cref="IVSDKDotNet.Script.KeyUp"/> method.</param>
-        public override void KeyPress(KeyEventArgs args)
+        /// <inheritdoc/>
+        public override void KeyPress(KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
         {
             if (args == null)
                 return;
@@ -432,16 +426,19 @@ namespace SharpUI.UIMenu {
                 return;
 
             // Process navigation
-            if (args.KeyCode == Options.NavigateUp) // Navigate Up
+            if (shouldBeUsedForNavigation)
             {
-                NavigateUp();
-            }
-            if (args.KeyCode == Options.NavigateDown) // Navigate Down
-            {
-                NavigateDown();
+                if (args.KeyCode == Options.NavigateUp) // Navigate Up
+                {
+                    NavigateUp();
+                }
+                if (args.KeyCode == Options.NavigateDown) // Navigate Down
+                {
+                    NavigateDown();
+                }
             }
 
-            Items[SelectedIndex].KeyPress(this, args);
+            Items[SelectedIndex].KeyPress(this, args, isKeyUpEvent, shouldBeUsedForNavigation);
         }
 
         /// <inheritdoc/>
