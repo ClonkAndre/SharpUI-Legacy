@@ -55,14 +55,16 @@ namespace SharpUI {
 
         #region Events
         /// <summary>The delegate for the <see cref="FocusChanged"/> event.</summary>
+        /// <param name="sender">The <see cref="UIBase"/> item of which the focus changed.</param>
         /// <param name="focused">Is this <see cref="UIBase"/> element focused or not.</param>
-        public delegate void FocusChangedDelegate(bool focused);
+        public delegate void FocusChangedDelegate(UIBase sender, bool focused);
         /// <summary>Raised when the focus of this <see cref="UIBase"/> element changes.</summary>
         public event FocusChangedDelegate FocusChanged;
 
         /// <summary>The delegate for the <see cref="VisibilityChanged"/> event.</summary>
+        /// <param name="sender">The <see cref="UIBase"/> item of which the visiblity changed.</param>
         /// <param name="visible">Is this <see cref="UIBase"/> element visible or not.</param>
-        public delegate void VisibilityChangedDelegate(bool visible);
+        public delegate void VisibilityChangedDelegate(UIBase sender, bool visible);
         /// <summary>Raised when the visibility of this <see cref="UIBase"/> element changes.</summary>
         public event VisibilityChangedDelegate VisibilityChanged;
         #endregion
@@ -76,7 +78,7 @@ namespace SharpUI {
         public void SetFocus(bool focused)
         {
             HasFocus = focused;
-            FocusChanged?.Invoke(HasFocus);
+            FocusChanged?.Invoke(this, HasFocus);
         }
 
         /// <summary>
@@ -87,7 +89,7 @@ namespace SharpUI {
         public void SetVisibility(bool visible)
         {
             IsVisible = visible;
-            VisibilityChanged?.Invoke(IsVisible);
+            VisibilityChanged?.Invoke(this, IsVisible);
         }
         #endregion
 

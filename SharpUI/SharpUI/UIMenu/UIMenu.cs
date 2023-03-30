@@ -10,7 +10,7 @@ using IVSDKDotNet.Direct3D9;
 
 namespace SharpUI.UIMenu {
     /// <summary>
-    /// Used to create a new Rockstar-like menu.
+    /// Used to create a new Rockstar-like menu as can be seen in GTA V.
     /// </summary>
     public class UIMenu : UIBase {
 
@@ -140,6 +140,14 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
+        #region Events
+        private void UIMenu_VisibilityChanged(UIBase sender, bool visible)
+        {
+            if (!visible)
+                SelectedIndex = 0;
+        }
+        #endregion
+
         #region Constructor
         public UIMenu(string title, string subtitle, UIMenuOptions options, Point pos, D3DResource image, UIItemBase[] items)
         {
@@ -151,6 +159,8 @@ namespace SharpUI.UIMenu {
 
             Items = new List<UIItemBase>();
             if (items != null) Items.AddRange(items);
+
+            VisibilityChanged += UIMenu_VisibilityChanged;
         }
         public UIMenu(string title, string subtitle, UIMenuOptions options, Point pos, UIItemBase[] items)
         {
@@ -161,6 +171,8 @@ namespace SharpUI.UIMenu {
 
             Items = new List<UIItemBase>();
             if (items != null) Items.AddRange(items);
+
+            VisibilityChanged += UIMenu_VisibilityChanged;
         }
 
         public UIMenu(string title, string subtitle, UIMenuOptions options, Point pos, D3DResource image)
@@ -172,6 +184,8 @@ namespace SharpUI.UIMenu {
             Image = image;
 
             Items = new List<UIItemBase>();
+
+            VisibilityChanged += UIMenu_VisibilityChanged;
         }
         public UIMenu(string title, string subtitle, UIMenuOptions options, Point pos)
         {
@@ -181,6 +195,8 @@ namespace SharpUI.UIMenu {
             Position = pos;
 
             Items = new List<UIItemBase>();
+
+            VisibilityChanged += UIMenu_VisibilityChanged;
         }
         #endregion
 
@@ -237,6 +253,29 @@ namespace SharpUI.UIMenu {
         #endregion
 
         #region Functions
+        /// <summary>
+        /// Gets an item from the <see cref="Items"/> list by the given tag and converts it to the given type T.
+        /// </summary>
+        /// <typeparam name="T">The new type to convert the found item to.</typeparam>
+        /// <param name="tag">The tag of the <see cref="UIItemBase"/> you search for.</param>
+        /// <returns>The target item of type T if found. Otherwise, null.</returns>
+        public T GetItemByThisTag<T>(string tag)
+        {
+            try
+            {
+                UIItemBase item = Items.Where(x => x.Tag != null && x.Tag.ToString() == tag).FirstOrDefault();
+
+                if (item != null)
+                    return (T)Convert.ChangeType(item, typeof(T));
+
+                return default;
+            }
+            catch (Exception)
+            {
+                return default;
+            }
+        }
+
         /// <summary>
         /// Gets a <see cref="UIItemBase"/> from the <see cref="Items"/> list by this tag.
         /// </summary>
@@ -383,34 +422,27 @@ namespace SharpUI.UIMenu {
                 }
             }
 
-
-
-
-
             // Draw selected item description
-            //UIItemBase selectedItem = Items[SelectedIndex];
-            //if (!string.IsNullOrWhiteSpace(selectedItem.Description))
-            //{
-            //    Point p2 = Position;
-            //    if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
-            //    {
-            //        // Set position for item description
-            //        p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
-            //    }
-            //    else
-            //    {
-            //        // Set position for item description
-            //        p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
-            //    }
+            UIItemBase selectedItem = Items[SelectedIndex];
+            if (!string.IsNullOrWhiteSpace(selectedItem.Description))
+            {
+                Point p2 = Position;
+                if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
+                {
+                    // Set position for item description
+                    p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                }
+                else
+                {
+                    // Set position for item description
+                    p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                }
 
-            //    //Rectangle textRect = gfx.MeasureText(null, selectedItem.Description, new Rectangle(p2.X, p2.Y + 10, ItemSize.Width, ItemSize.Height), eD3DFontDrawFlags.Left);
-            //    //SizeF size = GetTextSize(selectedItem.Description, ItemSize, out int linesFitted);
+                // Shadow
+                gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X + 2, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.Black);
 
-            //    //linesFitted = ItemSize.Height + linesFitted * ItemSize.Height;
-
-            //    gfx.DrawBoxFilled(gfx.Device, new System.Numerics.Vector2(p2.X, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height), Color.Black);
-            //    gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height)), eD3DFontDrawFlags.Left, Color.White);
-            //}
+                gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 8), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
+            }
         }
 
         /// <inheritdoc/>

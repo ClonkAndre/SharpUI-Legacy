@@ -72,7 +72,7 @@ namespace SharpUITest {
 
             // Creates a new UIMenu
             testMenu1 = new UIMenu("Title", "Subtitle", UIMenuOptions.Default(), new Point(100, 100), menuImage, new UIItemBase[] {
-                new UIItem("test item 1 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "Just a test to test if the text will fit properly, and will go to the new-line if cut-off.", UIItemStyle.Default(), null),
+                new UIItem("test item 1 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm", "Just a test to test if the text will fit properly, and will go to the new-line if cut-off. will go to the new-line if cut-off. test to test if the text will fit properly. Just a test to test if the text will fit properly", UIItemStyle.Default(), null),
                 new UIItem("Show / Hide Image", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { 
                     if (menu.Image == null)
                     {
@@ -90,6 +90,7 @@ namespace SharpUITest {
                 new UIListItem<string>((object)"TestList1", "test list", UIItemStyle.Default(), (UIMenu menu, UIListItem<string> item) => { ShowSubtitleMessage(item.SelectedText); }, new string[] { "Test Item 1", "Test Item 2", "Test Item 3" }),
                 new UIListItem<int>("test int list", UIItemStyle.Default(), (UIMenu menu, UIListItem<int> item) => { ShowSubtitleMessage(item.SelectedText); }, new int[] { 1, 2, 3 }),
                 new UIIntegerUpDownItem("test int up/down item", UIItemStyle.Default(), (UIMenu menu, UIIntegerUpDownItem item) => { ShowSubtitleMessage(item.Value.ToString()); }),
+                new UIDoubleUpDownItem("test double up/down item", 25, 0.5, UIItemStyle.Default(), (UIMenu menu, UIDoubleUpDownItem item) => { ShowSubtitleMessage(item.Value.ToString()); }),
                 new UIItem("Set focus to testMenu2", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu2, true); }),
                 new UIItem("Close all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType<UIMenu>(false); }),
                 new UIItem("Close menu", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.SetVisibility(false); })
@@ -97,11 +98,11 @@ namespace SharpUITest {
             testMenu1.SetVisibility(true);
 
             // Tries to get the "TestList1" item inside the "testMenu1" by its tag and add a new item to the list.
-            UIItemBase itemFound = testMenu1.GetItemByThisTag("TestList1");
+            UIListItem<string> itemFound = testMenu1.GetItemByThisTag<UIListItem<string>>("TestList1");
             if (itemFound != null)
             {
-                UIListItem<string> theItem = (itemFound as UIListItem<string>);
-                theItem.Items.Add("I'm new");
+                //UIListItem<string> theItem = (itemFound as UIListItem<string>);
+                itemFound.Items.Add("I'm new");
             }
 
 

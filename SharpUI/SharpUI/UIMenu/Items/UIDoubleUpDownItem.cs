@@ -5,46 +5,44 @@ using System.Windows.Forms;
 
 using IVSDKDotNet.Direct3D9;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-
 namespace SharpUI.UIMenu {
     /// <summary>
-    /// An integer up/down menu item for the <see cref="UIMenu"/> which with you can increase/decrease values.
+    /// An double up/down menu item for the <see cref="UIMenu"/> which with you can increase/decrease values.
     /// </summary>
-    public class UIIntegerUpDownItem : UIItemBase {
+    public class UIDoubleUpDownItem : UIItemBase {
 
         #region Variables and Properties
         // Variables
         private string _itemText;
-        private int _value;
-        private int _increment = 1;
+        private double _value;
+        private double _increment = 1;
 
-        private Action<UIMenu, UIIntegerUpDownItem> _onClickAction;
+        private Action<UIMenu, UIDoubleUpDownItem> _onClickAction;
 
         // Properties
-        /// <summary>Gets or set the text of this <see cref="UIIntegerUpDownItem"/>.</summary>
+        /// <summary>Gets or set the text of this <see cref="UIDoubleUpDownItem"/>.</summary>
         public string Text
         {
             get { return _itemText; }
             set { _itemText = value; }
         }
 
-        /// <summary>Gets or sets the current value of the <see cref="UIIntegerUpDownItem"/>.</summary>
-        public int Value
+        /// <summary>Gets or sets the current value of the <see cref="UIDoubleUpDownItem"/>.</summary>
+        public double Value
         {
             get { return _value; }
             set { _value = value; }
         }
 
-        /// <summary>Gets or sets the value to increment or decrement the <see cref="UIIntegerUpDownItem"/>. Default is 1.</summary>
-        public int Increment
+        /// <summary>Gets or sets the value to increment or decrement the <see cref="UIDoubleUpDownItem"/>. Default is 1.</summary>
+        public double Increment
         {
             get { return _increment; }
             set { _increment = value; }
         }
 
-        /// <summary>Gets or sets the <see cref="Action"/> that should be executed when the user presses this <see cref="UIIntegerUpDownItem"/>.</summary>
-        public Action<UIMenu, UIIntegerUpDownItem> OnClick
+        /// <summary>Gets or sets the <see cref="Action"/> that should be executed when the user presses this <see cref="UIDoubleUpDownItem"/>.</summary>
+        public Action<UIMenu, UIDoubleUpDownItem> OnClick
         {
             get { return _onClickAction; }
             set { _onClickAction = value; }
@@ -52,12 +50,12 @@ namespace SharpUI.UIMenu {
         #endregion
 
         #region Events
-        public delegate void ValueChangedDelegate(int newValue);
+        public delegate void ValueChangedDelegate(double newValue);
         public event ValueChangedDelegate ValueChanged;
         #endregion
 
         #region Constructor
-        public UIIntegerUpDownItem(object tag, bool enabled, string text, string desc, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, bool enabled, string text, string desc, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             IsEnabled = enabled;
@@ -68,7 +66,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, string text, string desc, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, string text, string desc, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             Text = text;
@@ -78,7 +76,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, bool enabled, string text, string desc, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, bool enabled, string text, string desc, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             IsEnabled = enabled;
@@ -87,51 +85,51 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, string text, string desc, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, string text, string desc, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
-            Text = text;
-            Description = desc;
-            Style = style;
-            OnClick = onClick;
-        }
-
-        public UIIntegerUpDownItem(bool enabled, string text, string desc, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
-        {
-            IsEnabled = enabled;
-            Text = text;
-            Description = desc;
-            Value = value;
-            Increment = increment;
-            Style = style;
-            OnClick = onClick;
-        }
-        public UIIntegerUpDownItem(string text, string desc, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
-        {
-            Text = text;
-            Description = desc;
-            Value = value;
-            Increment = increment;
-            Style = style;
-            OnClick = onClick;
-        }
-        public UIIntegerUpDownItem(bool enabled, string text, string desc, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
-        {
-            IsEnabled = enabled;
-            Text = text;
-            Description = desc;
-            Style = style;
-            OnClick = onClick;
-        }
-        public UIIntegerUpDownItem(string text, string desc, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
-        {
             Text = text;
             Description = desc;
             Style = style;
             OnClick = onClick;
         }
 
-        public UIIntegerUpDownItem(object tag, bool enabled, string text, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(bool enabled, string text, string desc, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
+        {
+            IsEnabled = enabled;
+            Text = text;
+            Description = desc;
+            Value = value;
+            Increment = increment;
+            Style = style;
+            OnClick = onClick;
+        }
+        public UIDoubleUpDownItem(string text, string desc, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
+        {
+            Text = text;
+            Description = desc;
+            Value = value;
+            Increment = increment;
+            Style = style;
+            OnClick = onClick;
+        }
+        public UIDoubleUpDownItem(bool enabled, string text, string desc, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
+        {
+            IsEnabled = enabled;
+            Text = text;
+            Description = desc;
+            Style = style;
+            OnClick = onClick;
+        }
+        public UIDoubleUpDownItem(string text, string desc, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
+        {
+            Text = text;
+            Description = desc;
+            Style = style;
+            OnClick = onClick;
+        }
+
+        public UIDoubleUpDownItem(object tag, bool enabled, string text, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             IsEnabled = enabled;
@@ -141,7 +139,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, string text, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, string text, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             Text = text;
@@ -150,7 +148,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, bool enabled, string text, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, bool enabled, string text, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             IsEnabled = enabled;
@@ -158,7 +156,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(object tag, string text, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(object tag, string text, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Tag = tag;
             Text = text;
@@ -166,7 +164,7 @@ namespace SharpUI.UIMenu {
             OnClick = onClick;
         }
 
-        public UIIntegerUpDownItem(bool enabled, string text, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(bool enabled, string text, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             IsEnabled = enabled;
             Text = text;
@@ -175,7 +173,7 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(string text, int value, int increment, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(string text, double value, double increment, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Text = text;
             Value = value;
@@ -183,14 +181,14 @@ namespace SharpUI.UIMenu {
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(bool enabled, string text, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(bool enabled, string text, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             IsEnabled = enabled;
             Text = text;
             Style = style;
             OnClick = onClick;
         }
-        public UIIntegerUpDownItem(string text, UIItemStyle style, Action<UIMenu, UIIntegerUpDownItem> onClick)
+        public UIDoubleUpDownItem(string text, UIItemStyle style, Action<UIMenu, UIDoubleUpDownItem> onClick)
         {
             Text = text;
             Style = style;
