@@ -85,15 +85,15 @@ namespace SharpUITest {
                 }),
                 new UIItem("Increase item height", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.ItemSize = new Size(menu.ItemSize.Width, menu.ItemSize.Height + 1); menu.Subtitle = menu.ItemSize.ToString(); }),
                 new UIItem("Decrease item height", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.ItemSize = new Size(menu.ItemSize.Width, menu.ItemSize.Height - 1); menu.Subtitle = menu.ItemSize.ToString(); }),
-                new UICheckboxItem(false, false, "test checkbox", UICheckboxItemStyle.Default(), (UIMenu menu, UICheckboxItem item) => { ShowSubtitleMessage("COOL!"); }),
+                new UICheckboxItem(true, false, "test checkbox", UICheckboxItemStyle.Default(), (UIMenu menu, UICheckboxItem item) => { ShowSubtitleMessage("COOL!"); }),
                 new UISliderItem("Slider item", 5, UISliderItemStyle.Default(), (UIMenu menu, UISliderItem item) => { ShowSubtitleMessage("Value: " + item.Value.ToString()); }),
                 new UIListItem<string>((object)"TestList1", "test list", UIItemStyle.Default(), (UIMenu menu, UIListItem<string> item) => { ShowSubtitleMessage(item.SelectedText); }, new string[] { "Test Item 1", "Test Item 2", "Test Item 3" }),
                 new UIListItem<int>("test int list", UIItemStyle.Default(), (UIMenu menu, UIListItem<int> item) => { ShowSubtitleMessage(item.SelectedText); }, new int[] { 1, 2, 3 }),
                 new UIIntegerUpDownItem("test int up/down item", UIItemStyle.Default(), (UIMenu menu, UIIntegerUpDownItem item) => { ShowSubtitleMessage(item.Value.ToString()); }),
                 new UIDoubleUpDownItem("test double up/down item", 25, 0.5, UIItemStyle.Default(), (UIMenu menu, UIDoubleUpDownItem item) => { ShowSubtitleMessage(item.Value.ToString()); }),
                 new UIItem("Set focus to testMenu2", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu2, true); }),
-                new UIItem("Close all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType<UIMenu>(false); }),
-                new UIItem("Close menu", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.SetVisibility(false); })
+                new UIItem("Close all menus", "Closes all menus", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.ChangeVisibilityOfEveryElementOfType<UIMenu>(false); }),
+                new UIItem("Close menu", "Closes this menu", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { menu.SetVisibility(false); })
             });
             testMenu1.SetVisibility(true);
 
@@ -108,7 +108,7 @@ namespace SharpUITest {
 
             // Creates another UIMenu
             testMenu2 = new UIMenu("TEST MENU 2!", "Subtitle", UIMenuOptions.Default(), new Point(1000, 500), menuImage, new UIItemBase[] {
-                new UIItem("Test item", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { ShowSubtitleMessage("123"); }),
+                new UIItem("Test item", "Test!", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { ShowSubtitleMessage("123"); }),
                 new UIItem("Set focus to testMenu1", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu1, true); }),
                 new UIItem("Set focus to testMenu3", UIItemStyle.Default(), (UIMenu menu, UIItem item) => { pool.SetFocus(testMenu3, true); })
             });
@@ -140,7 +140,7 @@ namespace SharpUITest {
         private void Gfx_OnInit(IntPtr device)
         {
             // Create menu header image and set them to all 3 UIMenus if texture got created successfully.
-            D3DResult r = gfx.CreateD3D9Texture(device, Properties.Resources.menuImage);
+            D3DResult r = gfx.CreateD3D9Texture(Properties.Resources.menuImage);
             if (r.Error != null)
             {
                 CGame.Console.PrintError(r.Error.ToString());

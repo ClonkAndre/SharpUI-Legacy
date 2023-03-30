@@ -237,7 +237,7 @@ namespace SharpUI.UI
 
                     string text = entry.Func != null ? entry.Func.Invoke(entry) : entry.Text;
                     Size textSize = gfx.MeasureText(FontOverride, text).Size;
-                    gfx.DrawString(gfx.Device, text, new Point(Position.X, Position.Y + (textSize.Height + DistanceBetweenItems) * i), entry.Color);
+                    gfx.DrawString(text, new Point(Position.X, Position.Y + (textSize.Height + DistanceBetweenItems) * i), entry.Color);
                 }
             }
         }

@@ -313,10 +313,10 @@ namespace SharpUI.UIMenu {
                 if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
                 {
                     // Draw menu header image
-                    gfx.DrawTexture(gfx.Device, Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
+                    gfx.DrawTexture(Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
 
                     // Draw menu title
-                    gfx.DrawString(gfx.Device, TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
+                    gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
                     // Draw menu subtitle item
                     subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
@@ -354,10 +354,10 @@ namespace SharpUI.UIMenu {
                     if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
                     {
                         // Draw menu header image
-                        gfx.DrawTexture(gfx.Device, Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
+                        gfx.DrawTexture(Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
 
                         // Draw menu title
-                        gfx.DrawString(gfx.Device, TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
+                        gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
                         // Draw menu subtitle item
                         subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
@@ -393,10 +393,10 @@ namespace SharpUI.UIMenu {
                     if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
                     {
                         // Draw menu header image
-                        gfx.DrawTexture(gfx.Device, Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
+                        gfx.DrawTexture(Image, new RectangleF(p.X, p.Y, ItemSize.Width, 108f));
 
                         // Draw menu title
-                        gfx.DrawString(gfx.Device, TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
+                        gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
                         // Draw menu subtitle item
                         subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
@@ -430,18 +430,32 @@ namespace SharpUI.UIMenu {
                 if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
                 {
                     // Set position for item description
-                    p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                    if (Items.Count < MaxItemsVisibleAtOnce)
+                    {
+                        p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + Items.Count * ItemSize.Height);
+                    }
+                    else
+                    {
+                        p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                    }
                 }
                 else
                 {
                     // Set position for item description
-                    p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                    if (Items.Count < MaxItemsVisibleAtOnce)
+                    {
+                        p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + Items.Count * ItemSize.Height);
+                    }
+                    else
+                    {
+                        p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                    }
                 }
 
                 // Shadow
-                gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X + 2, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.Black);
+                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X + 2, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.Black);
 
-                gfx.DrawString(gfx.Device, selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 8), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
+                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 8), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
             }
         }
 

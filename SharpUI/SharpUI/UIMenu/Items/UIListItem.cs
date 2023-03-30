@@ -210,8 +210,8 @@ namespace SharpUI.UIMenu {
             {
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
 
                     // Draw list
                     Size textSize = gfx.MeasureText(menu.FontOverride, SelectedText).Size;
@@ -220,14 +220,14 @@ namespace SharpUI.UIMenu {
                     if (textRect.Width > MaxItemWidth)
                         textRect = new Rectangle(new Point((pos.X + menu.ItemSize.Width) - (MaxItemWidth + 19), pos.Y + (menu.ItemSize.Height / 2) - 12), new Size(MaxItemWidth, textSize.Height));
 
-                    gfx.DrawString(gfx.Device, menu.FontOverride, "<", new Point(textRect.Location.X - 12, textRect.Location.Y), Style.SelectedForegroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, SelectedText, new Rectangle(new Point(textRect.Location.X, textRect.Location.Y), textRect.Size), eD3DFontDrawFlags.Left, Style.SelectedForegroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, ">", new Point(textRect.Location.X + textRect.Width, textRect.Location.Y), Style.SelectedForegroundColor);
+                    gfx.DrawString(menu.FontOverride, "<", new Point(textRect.Location.X - 12, textRect.Location.Y), Style.SelectedForegroundColor);
+                    gfx.DrawString(menu.FontOverride, SelectedText, new Rectangle(new Point(textRect.Location.X, textRect.Location.Y), textRect.Size), eD3DFontDrawFlags.Left, Style.SelectedForegroundColor);
+                    gfx.DrawString(menu.FontOverride, ">", new Point(textRect.Location.X + textRect.Width, textRect.Location.Y), Style.SelectedForegroundColor);
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
 
                     // Draw list
                     Size textSize = gfx.MeasureText(menu.FontOverride, SelectedText).Size;
@@ -236,15 +236,15 @@ namespace SharpUI.UIMenu {
                     if (textRect.Width > MaxItemWidth)
                         textRect = new Rectangle(new Point((pos.X + menu.ItemSize.Width) - (MaxItemWidth + 8), pos.Y + (menu.ItemSize.Height / 2) - 12), new Size(MaxItemWidth, textSize.Height));
 
-                    gfx.DrawString(gfx.Device, menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.ForegroundColor);
+                    gfx.DrawString(menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.ForegroundColor);
                 }
             }
             else
             {
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Draw list
                     Size textSize = gfx.MeasureText(menu.FontOverride, SelectedText).Size;
@@ -253,12 +253,12 @@ namespace SharpUI.UIMenu {
                     if (textRect.Width > MaxItemWidth)
                         textRect = new Rectangle(new Point((pos.X + menu.ItemSize.Width) - (MaxItemWidth + 8), pos.Y + (menu.ItemSize.Height / 2) - 12), new Size(MaxItemWidth, textSize.Height));
 
-                    gfx.DrawString(gfx.Device, menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.DisabledForegroundColor);
+                    gfx.DrawString(menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.DisabledForegroundColor);
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Draw list
                     Size textSize = gfx.MeasureText(menu.FontOverride, SelectedText).Size;
@@ -267,7 +267,7 @@ namespace SharpUI.UIMenu {
                     if (textRect.Width > MaxItemWidth)
                         textRect = new Rectangle(new Point((pos.X + menu.ItemSize.Width) - (MaxItemWidth + 8), pos.Y + (menu.ItemSize.Height / 2) - 12), new Size(MaxItemWidth, textSize.Height));
 
-                    gfx.DrawString(gfx.Device, menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.DisabledForegroundColor);
+                    gfx.DrawString(menu.FontOverride, SelectedText, new Rectangle(textRect.Location, textRect.Size), eD3DFontDrawFlags.Left, Style.DisabledForegroundColor);
                 }
             }
         }

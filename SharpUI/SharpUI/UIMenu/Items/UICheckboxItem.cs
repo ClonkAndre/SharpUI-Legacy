@@ -122,58 +122,58 @@ namespace SharpUI.UIMenu {
             {
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
 
                     // Draw checkbox
                     if (IsChecked)
                     {
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 26), Style.SelectedCheckboxColor, 2.5f);
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 26), Style.SelectedCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 27), Style.SelectedCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 27), Style.SelectedCheckboxColor, 2.5f);
                     }
-                    gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.SelectedCheckboxColor);
+                    gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.SelectedCheckboxColor);
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
 
                     // Draw checkbox
                     if (IsChecked)
                     {
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 26), Style.CheckboxColor, 2.5f);
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 26), Style.CheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 27), Style.CheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 27), Style.CheckboxColor, 2.5f);
                     }
-                    gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.CheckboxColor);
+                    gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.CheckboxColor);
                 }
             }
             else
             {
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Draw checkbox
                     if (IsChecked)
                     {
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 26), Style.DisabledCheckboxColor, 2.5f);
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 26), Style.DisabledCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 27), Style.DisabledCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 27), Style.DisabledCheckboxColor, 2.5f);
                     }
-                    gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.DisabledCheckboxColor);
+                    gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.DisabledCheckboxColor);
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Draw checkbox
                     if (IsChecked)
                     {
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 26), Style.DisabledCheckboxColor, 2.5f);
-                        gfx.DrawLine(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 5), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 26), Style.DisabledCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 27), Style.DisabledCheckboxColor, 2.5f);
+                        gfx.DrawLine(new Vector2((pos.X + menu.ItemSize.Width) - 9, pos.Y + 6), new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 27), Style.DisabledCheckboxColor, 2.5f);
                     }
-                    gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.DisabledCheckboxColor);
+                    gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width) - menu.ItemSize.Height, pos.Y + 4), new SizeF(menu.ItemSize.Height - 8, menu.ItemSize.Height - 8), 2f, Style.DisabledCheckboxColor);
                 }
             }
         }

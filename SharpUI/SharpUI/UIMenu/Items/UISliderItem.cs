@@ -246,23 +246,23 @@ namespace SharpUI.UIMenu {
 
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.SelectedForegroundColor);
 
                     // Slider
-                    if (DrawBorder) gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.SliderBorderColor); // Slider Border
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SelectedSliderBackgroundColor); // Slider Background
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.SelectedSliderForegroundColor); // Slider Foreground
+                    if (DrawBorder) gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.SliderBorderColor); // Slider Border
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SelectedSliderBackgroundColor); // Slider Background
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.SelectedSliderForegroundColor); // Slider Foreground
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
 
                     // Slider
-                    if (DrawBorder) gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.SliderBorderColor); // Slider Border
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.SliderForegroundColor); // Slider Foreground
+                    if (DrawBorder) gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.SliderBorderColor); // Slider Border
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.SliderForegroundColor); // Slider Foreground
                 }
             }
             else
@@ -271,23 +271,23 @@ namespace SharpUI.UIMenu {
 
                 if (IsSelected)
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.SelectedBackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Slider
-                    if (DrawBorder) gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.DisabledSliderBorderColor); // Slider Border
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.DisabledSliderForegroundColor); // Slider Foreground
+                    if (DrawBorder) gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.DisabledSliderBorderColor); // Slider Border
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.DisabledSliderForegroundColor); // Slider Foreground
                 }
                 else
                 {
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
-                    gfx.DrawString(gfx.Device, menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
+                    gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
+                    gfx.DrawString(menu.FontOverride, Text, textRect, eD3DFontDrawFlags.Left | eD3DFontDrawFlags.VerticalCenter, Style.DisabledForegroundColor);
 
                     // Slider
-                    if (DrawBorder) gfx.DrawBox(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.DisabledSliderBorderColor); // Slider Border
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
-                    gfx.DrawBoxFilled(gfx.Device, new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.DisabledSliderForegroundColor); // Slider Foreground
+                    if (DrawBorder) gfx.DrawBox(new Vector2((pos.X + menu.ItemSize.Width - 8) - (SliderSize.Width + SliderBorderWidth), pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f) - SliderBorderWidth), new SizeF(SliderSize.Width + (2 * SliderBorderWidth), SliderSize.Height + (2 * SliderBorderWidth)), SliderBorderWidth, Style.DisabledSliderBorderColor); // Slider Border
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(SliderSize.Width, SliderSize.Height), Style.SliderBackgroundColor); // Slider Background
+                    gfx.DrawBoxFilled(new Vector2((pos.X + menu.ItemSize.Width - 8) - SliderSize.Width, pos.Y + (menu.ItemSize.Height / 2f - SliderSize.Height / 2f)), new SizeF(w, 10f), Style.DisabledSliderForegroundColor); // Slider Foreground
                 }
             }
         }
