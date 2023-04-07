@@ -71,5 +71,8 @@
   <ItemGroup>
     <Resource Include="Resources\menuImage.bin" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\lock.bin" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

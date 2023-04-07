@@ -201,6 +201,37 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
+        #region Functions
+        /// <summary>
+        /// Peeks to the next item in this <see cref="UIListItem{T}"/>.
+        /// </summary>
+        /// <param name="repeat">Sets if the function should begin peeking from the beginning of the <see cref="Items"/> list if the peek index was greater then the <see cref="Items"/> count.</param>
+        /// <returns>The next item in this <see cref="UIListItem{T}"/> from the current <see cref="SelectedIndex"/>. <see langword="null"/> if: The <see cref="Items"/> list is empty, the peek index is less then 0 or when the peek index was greater then the <see cref="Items"/> count and 'repeat' was not set to true.</returns>
+        public T Peek(bool repeat = true)
+        {
+            if (Items.Count == 0)
+                return default(T);
+
+            int index = SelectedIndex + 1;
+
+            if (repeat)
+            {
+                if (index > (Items.Count - 1))
+                    index = 0;
+            }
+            else
+            {
+                if (index > (Items.Count - 1))
+                    return default(T);
+            }
+
+            if (index < 0)
+                return default(T);
+
+            return Items[index];
+        }
+        #endregion
+
         /// <inheritdoc/>
         public override void Draw(UIMenu menu, D3DGraphics gfx, Point pos)
         {
@@ -281,16 +312,40 @@ namespace SharpUI.UIMenu {
                 {
                     if (args.KeyCode == menu.Options.AcceptKey)
                     {
+                        menu.PlaySelectSound();
                         OnClick?.Invoke(menu, this);
                     }
                     if (args.KeyCode == menu.Options.NavigateLeft)
                     {
+                        menu.PlaySound("FRONTEND_MENU_SLIDER_DOWN");
                         NavigateLeft();
                     }
                     if (args.KeyCode == menu.Options.NavigateRight)
                     {
+                        menu.PlaySound("FRONTEND_MENU_SLIDER_UP");
                         NavigateRight();
                     }
+                }
+            }
+            else
+            {
+                if (args.KeyCode == menu.Options.AcceptKey)
+                    menu.PlayErrorSound();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void PerformClick(UIMenu parentMenu, bool ignoreEnabledState)
+        {
+            if (ignoreEnabledState)
+            {
+                OnClick?.Invoke(parentMenu, this);
+            }
+            else
+            {
+                if (IsEnabled)
+                {
+                    OnClick?.Invoke(parentMenu, this);
                 }
             }
         }

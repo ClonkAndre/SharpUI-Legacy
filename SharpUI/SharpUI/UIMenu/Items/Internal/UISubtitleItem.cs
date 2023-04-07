@@ -23,6 +23,7 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
+        /// <inheritdoc/>
         public override void Draw(UIMenu menu, D3DGraphics gfx, Point pos)
         {
             gfx.DrawBoxFilled(new Vector2(pos.X, pos.Y), menu.ItemSize, Style.BackgroundColor);
@@ -30,7 +31,14 @@ namespace SharpUI.UIMenu {
             gfx.DrawString(menu.FontOverride, string.Format("{0} / {1}", ItemCount == 0 ? "0" : SelectedIndex.ToString(), ItemCount.ToString()), new Rectangle(pos, new Size(menu.ItemSize.Width - 5, menu.ItemSize.Height)), eD3DFontDrawFlags.Right | eD3DFontDrawFlags.VerticalCenter, Style.ForegroundColor);
         }
 
+        /// <inheritdoc/>
         public override void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation)
+        {
+
+        }
+
+        /// <inheritdoc/>
+        public override void PerformClick(UIMenu parentMenu, bool ignoreEnabledState)
         {
 
         }

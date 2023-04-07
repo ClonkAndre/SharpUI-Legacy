@@ -301,16 +301,46 @@ namespace SharpUI.UIMenu {
                 {
                     if (args.KeyCode == menu.Options.AcceptKey)
                     {
+                        menu.PlaySelectSound();
                         OnClick?.Invoke(menu, this);
                     }
                     if (args.KeyCode == menu.Options.NavigateLeft)
                     {
-                        if (CanValueBeChanged) Value--;
+                        if (CanValueBeChanged)
+                        {
+                            Value--;
+                            menu.PlaySound("FRONTEND_MENU_SLIDER_DOWN");
+                        }
                     }
                     if (args.KeyCode == menu.Options.NavigateRight)
                     {
-                        if (CanValueBeChanged) Value++;
+                        if (CanValueBeChanged)
+                        {
+                            Value++;
+                            menu.PlaySound("FRONTEND_MENU_SLIDER_UP");
+                        }
                     }
+                }
+            }
+            else
+            {
+                if (args.KeyCode == menu.Options.AcceptKey)
+                    menu.PlayErrorSound();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void PerformClick(UIMenu parentMenu, bool ignoreEnabledState)
+        {
+            if (ignoreEnabledState)
+            {
+                OnClick?.Invoke(parentMenu, this);
+            }
+            else
+            {
+                if (IsEnabled)
+                {
+                    OnClick?.Invoke(parentMenu, this);
                 }
             }
         }

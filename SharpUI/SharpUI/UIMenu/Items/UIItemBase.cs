@@ -78,6 +78,13 @@ namespace SharpUI.UIMenu {
         public abstract void KeyPress(UIMenu menu, KeyEventArgs args, bool isKeyUpEvent, bool shouldBeUsedForNavigation);
 
         /// <summary>
+        /// Generates a click event for the item.
+        /// </summary>
+        /// <param name="parentMenu">Reference to the parent <see cref="UIMenu"/> the item belongs to.</param>
+        /// <param name="ignoreEnabledState">Sets if the <see cref="IsEnabled"/> check should be ignored.</param>
+        public abstract void PerformClick(UIMenu parentMenu, bool ignoreEnabledState);
+
+        /// <summary>
         /// Performs some cleaning up actions for the item.
         /// </summary>
         public abstract void Cleanup();

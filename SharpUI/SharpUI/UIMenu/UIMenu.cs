@@ -4,7 +4,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
+using IVSDKDotNet;
 using IVSDKDotNet.Direct3D9;
+using IVSDKDotNet.Native;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 
@@ -28,6 +30,9 @@ namespace SharpUI.UIMenu {
         private int _viewRangeEnd = 6;
         private int _maxItemsVisibleAtOnce = 6;
         private int _selectedIndex;
+        private int _descriptionTextHeight = 60;
+
+        private bool _doNotDrawSubtitlePart;
 
         /// <summary>Collection of all items in this <see cref="UIMenu"/>.</summary>
         public List<UIItemBase> Items;
@@ -101,6 +106,26 @@ namespace SharpUI.UIMenu {
         }
 
         /// <summary>
+        /// Sets the height of the description text at the bottom of this <see cref="UIMenu"/>.
+        /// <para>Default value: 60</para>
+        /// </summary>
+        public int DescriptionTextHeight
+        {
+            get { return _descriptionTextHeight; }
+            set { _descriptionTextHeight = value; }
+        }
+
+        /// <summary>
+        /// Sets if the part with the <see cref="Subtitle"/> and the currently <see cref="SelectedIndex"/> should not be drawn.
+        /// <para>Default value: <see langword="false"/></para>
+        /// </summary>
+        public bool DoNotDrawSubtitlePart
+        {
+            get { return _doNotDrawSubtitlePart; }
+            set { _doNotDrawSubtitlePart = value; }
+        }
+
+        /// <summary>
         /// Gets or sets the size of the items in this <see cref="UIMenu"/>.
         /// <para>Default X: 306, Y: 34</para>
         /// </summary>
@@ -108,6 +133,82 @@ namespace SharpUI.UIMenu {
         {
             get { return _itemSize; }
             set { _itemSize = value; }
+        }
+
+        /// <summary>
+        /// Gets the full menu rectangle of this <see cref="UIMenu"/>.
+        /// </summary>
+        public Rectangle MenuRectangle
+        {
+            get {
+                Rectangle rect = Rectangle.Empty;
+
+                if (Items.Count == 0)
+                {
+
+                    if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, 108 + ItemSize.Height * 2));
+                        }
+                        else
+                        {
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, 108 + ItemSize.Height));
+                        }
+                    }
+                    else
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, ItemSize.Height * 2));
+                        }
+                        else
+                        {
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, ItemSize.Height));
+                        }
+                    }
+
+                    return rect;
+                }
+
+                if (Image != null && Image.DXType == eD3D9ResourceType.Texture)
+                {
+                    if (Items.Count < MaxItemsVisibleAtOnce)
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, (108 + ItemSize.Height) + Items.Count * ItemSize.Height));
+                        else
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, 108 + Items.Count * ItemSize.Height));
+                    }
+                    else
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, (108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height));
+                        else
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, 108 + MaxItemsVisibleAtOnce * ItemSize.Height));
+                    }
+                }
+                else
+                {
+                    if (Items.Count < MaxItemsVisibleAtOnce)
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, ItemSize.Height + Items.Count * ItemSize.Height));
+                        else
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, Items.Count * ItemSize.Height));
+                    }
+                    else
+                    {
+                        if (!DoNotDrawSubtitlePart)
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, ItemSize.Height + MaxItemsVisibleAtOnce * ItemSize.Height));
+                        else
+                            rect = new Rectangle(Position, new Size(ItemSize.Width, MaxItemsVisibleAtOnce * ItemSize.Height));
+                    }
+                }
+
+                return rect;
+            }
         }
 
         /// <summary>
@@ -250,6 +351,43 @@ namespace SharpUI.UIMenu {
                 }
             }
         }
+
+        private void PlayNavigationSound()
+        {
+            if (Options.EnableNavigationSounds)
+            {
+                CTheScripts.SetDummyThread();
+                Natives.PLAY_SOUND_FRONTEND(-1, "FRONTEND_MENU_HIGHLIGHT_DOWN_UP");
+                CTheScripts.RestorePreviousThread();
+            }
+        }
+        internal void PlaySound(string name)
+        {
+            if (Options.EnableNavigationSounds)
+            {
+                CTheScripts.SetDummyThread();
+                Natives.PLAY_SOUND_FRONTEND(-1, name);
+                CTheScripts.RestorePreviousThread();
+            }
+        }
+        internal void PlayErrorSound()
+        {
+            if (Options.EnableNavigationSounds)
+            {
+                CTheScripts.SetDummyThread();
+                Natives.PLAY_SOUND_FRONTEND(-1, "FRONTEND_MENU_ERROR");
+                CTheScripts.RestorePreviousThread();
+            }
+        }
+        internal void PlaySelectSound()
+        {
+            if (Options.EnableNavigationSounds)
+            {
+                CTheScripts.SetDummyThread();
+                Natives.PLAY_SOUND_FRONTEND(-1, "FRONTEND_MENU_SELECT");
+                CTheScripts.RestorePreviousThread();
+            }
+        }
         #endregion
 
         #region Functions
@@ -295,6 +433,50 @@ namespace SharpUI.UIMenu {
         {
             return Items.Where(x => x.GetType() == typeof(T)).ToArray();
         }
+
+        /// <summary>
+        /// Peeks to the next item in this <see cref="UIMenu"/>.
+        /// </summary>
+        /// <param name="repeat">Sets if the function should begin peeking from the beginning of the <see cref="Items"/> list if the peek index was greater then the <see cref="Items"/> count.</param>
+        /// <returns>The next item in this <see cref="UIMenu"/> from the current <see cref="SelectedIndex"/>. <see langword="null"/> if: The <see cref="Items"/> list is empty, the peek index is less then 0 or when the peek index was greater then the <see cref="Items"/> count and 'repeat' was not set to true.</returns>
+        public UIItemBase Peek(bool repeat = true)
+        {
+            if (Items.Count == 0)
+                return null;
+
+            int index = SelectedIndex + 1;
+
+            if (repeat)
+            {
+                if (index > (Items.Count - 1))
+                    index = 0;
+            }
+            else
+            {
+                if (index > (Items.Count - 1))
+                    return null;
+            }
+
+            if (index < 0)
+                return null;
+
+            return Items[index];
+        }
+
+        /// <summary>
+        /// Gets if the current item at the given index is currently visible in the <see cref="UIMenu"/>.
+        /// </summary>
+        /// <param name="index">The index of an item.</param>
+        /// <returns>True if the item is visible in the <see cref="UIMenu"/>. False if the item is out of the view range, the <see cref="UIMenu"/> does not have any items or when the given index is smaller then the <see cref="Items"/> count.</returns>
+        public bool IsItemVisibleInMenu(int index)
+        {
+            if (Items.Count == 0)
+                return false;
+            if (Items.Count < index)
+                return false;
+
+            return index < ViewRangeEnd && index >= ViewRangeStart;
+        }
         #endregion
 
         /// <inheritdoc/>
@@ -304,7 +486,9 @@ namespace SharpUI.UIMenu {
                 return;
             if (!IsVisible)
                 return;
-            
+            if (Options.DoNotShowInPauseMenu && Natives.IS_PAUSE_MENU_ACTIVE())
+                return;
+
             // Draw only header image, subtitle item and no items item when there are no items in the menu.
             if (Items.Count == 0)
             {
@@ -318,25 +502,43 @@ namespace SharpUI.UIMenu {
                     // Draw menu title
                     gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
-                    // Draw menu subtitle item
-                    subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
-                    subtitleItem.SelectedIndex = SelectedIndex + 1;
-                    subtitleItem.ItemCount = Items.Count;
+                    if (!DoNotDrawSubtitlePart)
+                    {
+                        // Draw menu subtitle item
+                        subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
+                        subtitleItem.SelectedIndex = SelectedIndex + 1;
+                        subtitleItem.ItemCount = Items.Count;
 
-                    // Draw no items item
-                    p = new Point(p.X, p.Y + 108 + ItemSize.Height);
-                    noItemsItem.Draw(this, gfx, p);
+                        // Draw no items item
+                        p = new Point(p.X, p.Y + 108 + ItemSize.Height);
+                        noItemsItem.Draw(this, gfx, p);
+                    }
+                    else
+                    {
+                        // Draw no items item
+                        p = new Point(p.X, p.Y + 108);
+                        noItemsItem.Draw(this, gfx, p);
+                    }
                 }
                 else
                 {
-                    // Draw menu subtitle item
-                    subtitleItem.Draw(this, gfx, p);
-                    subtitleItem.SelectedIndex = SelectedIndex + 1;
-                    subtitleItem.ItemCount = Items.Count;
+                    if (!DoNotDrawSubtitlePart)
+                    {
+                        // Draw menu subtitle item
+                        subtitleItem.Draw(this, gfx, p);
+                        subtitleItem.SelectedIndex = SelectedIndex + 1;
+                        subtitleItem.ItemCount = Items.Count;
 
-                    // Draw no items item
-                    p = new Point(p.X, p.Y + ItemSize.Height);
-                    noItemsItem.Draw(this, gfx, p);
+                        // Draw no items item
+                        p = new Point(p.X, p.Y + ItemSize.Height);
+                        noItemsItem.Draw(this, gfx, p);
+                    }
+                    else
+                    {
+                        // Draw no items item
+                        p = new Point(p.X, p.Y);
+                        noItemsItem.Draw(this, gfx, p);
+                    }
                 }
 
                 return;
@@ -359,23 +561,39 @@ namespace SharpUI.UIMenu {
                         // Draw menu title
                         gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
-                        // Draw menu subtitle item
-                        subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
-                        subtitleItem.SelectedIndex = SelectedIndex + 1;
-                        subtitleItem.ItemCount = Items.Count;
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            // Draw menu subtitle item
+                            subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
+                            subtitleItem.SelectedIndex = SelectedIndex + 1;
+                            subtitleItem.ItemCount = Items.Count;
 
-                        // Set position for item
-                        p = new Point(p.X, (p.Y + 108 + ItemSize.Height) + i * ItemSize.Height);
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + 108 + ItemSize.Height) + i * ItemSize.Height);
+                        }
+                        else
+                        {
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + 108) + i * ItemSize.Height);
+                        }
                     }
                     else
                     {
-                        // Draw menu subtitle item
-                        subtitleItem.Draw(this, gfx, p);
-                        subtitleItem.SelectedIndex = SelectedIndex + 1;
-                        subtitleItem.ItemCount = Items.Count;
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            // Draw menu subtitle item
+                            subtitleItem.Draw(this, gfx, p);
+                            subtitleItem.SelectedIndex = SelectedIndex + 1;
+                            subtitleItem.ItemCount = Items.Count;
 
-                        // Set position for item
-                        p = new Point(p.X, (p.Y + ItemSize.Height) + i * ItemSize.Height);
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + ItemSize.Height) + i * ItemSize.Height);
+                        }
+                        else
+                        {
+                            // Set position for item
+                            p = new Point(p.X, p.Y + i * ItemSize.Height);
+                        }
                     }
 
                     // Draw item
@@ -398,23 +616,39 @@ namespace SharpUI.UIMenu {
                         // Draw menu title
                         gfx.DrawString(TitleFontOverride, Title, new Rectangle(p.X, p.Y, ItemSize.Width, 108), eD3DFontDrawFlags.Center | eD3DFontDrawFlags.VerticalCenter, Color.White);
 
-                        // Draw menu subtitle item
-                        subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
-                        subtitleItem.SelectedIndex = SelectedIndex + 1;
-                        subtitleItem.ItemCount = Items.Count;
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            // Draw menu subtitle item
+                            subtitleItem.Draw(this, gfx, new Point(p.X, p.Y + 108));
+                            subtitleItem.SelectedIndex = SelectedIndex + 1;
+                            subtitleItem.ItemCount = Items.Count;
 
-                        // Set position for item
-                        p = new Point(p.X, (p.Y + 108 + ItemSize.Height) + (i - ViewRangeStart) * ItemSize.Height);
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + 108 + ItemSize.Height) + (i - ViewRangeStart) * ItemSize.Height);
+                        }
+                        else
+                        {
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + 108) + (i - ViewRangeStart) * ItemSize.Height);
+                        }
                     }
                     else
                     {
-                        // Draw menu subtitle item
-                        subtitleItem.Draw(this, gfx, p);
-                        subtitleItem.SelectedIndex = SelectedIndex + 1;
-                        subtitleItem.ItemCount = Items.Count;
+                        if (!DoNotDrawSubtitlePart)
+                        {
+                            // Draw menu subtitle item
+                            subtitleItem.Draw(this, gfx, p);
+                            subtitleItem.SelectedIndex = SelectedIndex + 1;
+                            subtitleItem.ItemCount = Items.Count;
 
-                        // Set position for item
-                        p = new Point(p.X, (p.Y + ItemSize.Height) + (i - ViewRangeStart) * ItemSize.Height);
+                            // Set position for item
+                            p = new Point(p.X, (p.Y + ItemSize.Height) + (i - ViewRangeStart) * ItemSize.Height);
+                        }
+                        else
+                        {
+                            // Set position for item
+                            p = new Point(p.X, p.Y + (i - ViewRangeStart) * ItemSize.Height);
+                        }
                     }
 
                     // Draw item
@@ -432,11 +666,17 @@ namespace SharpUI.UIMenu {
                     // Set position for item description
                     if (Items.Count < MaxItemsVisibleAtOnce)
                     {
-                        p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + Items.Count * ItemSize.Height);
+                        if (!DoNotDrawSubtitlePart)
+                            p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + Items.Count * ItemSize.Height);
+                        else
+                            p2 = new Point(p2.X, (p2.Y + 108) + Items.Count * ItemSize.Height);
                     }
                     else
                     {
-                        p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                        if (!DoNotDrawSubtitlePart)
+                            p2 = new Point(p2.X, (p2.Y + 108 + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                        else
+                            p2 = new Point(p2.X, (p2.Y + 108) + MaxItemsVisibleAtOnce * ItemSize.Height);
                     }
                 }
                 else
@@ -444,18 +684,24 @@ namespace SharpUI.UIMenu {
                     // Set position for item description
                     if (Items.Count < MaxItemsVisibleAtOnce)
                     {
-                        p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + Items.Count * ItemSize.Height);
+                        if (!DoNotDrawSubtitlePart)
+                            p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + Items.Count * ItemSize.Height);
+                        else
+                            p2 = new Point(p2.X, p2.Y + Items.Count * ItemSize.Height);
                     }
                     else
                     {
-                        p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                        if (!DoNotDrawSubtitlePart)
+                            p2 = new Point(p2.X, (p2.Y + ItemSize.Height) + MaxItemsVisibleAtOnce * ItemSize.Height);
+                        else
+                            p2 = new Point(p2.X, p2.Y + MaxItemsVisibleAtOnce * ItemSize.Height);
                     }
                 }
 
                 // Shadow
-                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X + 2, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.Black);
+                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X + 2, p2.Y + 10), new Size(ItemSize.Width, ItemSize.Height + DescriptionTextHeight)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.Black);
 
-                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 8), new Size(ItemSize.Width, ItemSize.Height + 60)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
+                gfx.DrawString(selectedItem.Description, new Rectangle(new Point(p2.X, p2.Y + 8), new Size(ItemSize.Width, ItemSize.Height + DescriptionTextHeight)), eD3DFontDrawFlags.Left | eD3DFontDrawFlags.WordBreak, Color.White);
             }
         }
 
@@ -470,20 +716,25 @@ namespace SharpUI.UIMenu {
                 return;
             if (Items.Count == 0)
                 return;
+            if (Options.DoNotShowInPauseMenu && Natives.IS_PAUSE_MENU_ACTIVE())
+                return;
 
             // Process navigation
             if (shouldBeUsedForNavigation)
             {
                 if (args.KeyCode == Options.NavigateUp) // Navigate Up
                 {
+                    PlayNavigationSound();
                     NavigateUp();
                 }
                 if (args.KeyCode == Options.NavigateDown) // Navigate Down
                 {
+                    PlayNavigationSound();
                     NavigateDown();
                 }
             }
 
+            // Process the keypress
             Items[SelectedIndex].KeyPress(this, args, isKeyUpEvent, shouldBeUsedForNavigation);
         }
 

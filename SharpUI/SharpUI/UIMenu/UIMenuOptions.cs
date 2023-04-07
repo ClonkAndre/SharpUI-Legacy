@@ -13,6 +13,9 @@ namespace SharpUI.UIMenu {
         private Keys navLeft, navRight;
         private Keys aKey;
 
+        private bool _doNotShowInPauseMenu;
+        private bool _enableNavigationSounds;
+
         // Properties
         /// <summary>
         /// Key for navigating up in the <see cref="UIMenu"/>.
@@ -58,9 +61,37 @@ namespace SharpUI.UIMenu {
             get { return aKey; }
             set { aKey = value; }
         }
+
+        /// <summary>
+        /// Sets if the <see cref="UIMenu"/> should not be shown in the pause menu. The default is <see langword="true"/>.
+        /// </summary>
+        public bool DoNotShowInPauseMenu
+        {
+            get { return _doNotShowInPauseMenu; }
+            set { _doNotShowInPauseMenu = value; }
+        }
+
+        /// <summary>
+        /// Sets if the <see cref="UIMenu"/> and the items in an <see cref="UIMenu"/> are allowed to play sounds. For example when you click on an item. The default is <see langword="true"/>.
+        /// </summary>
+        public bool EnableNavigationSounds
+        {
+            get { return _enableNavigationSounds; }
+            set { _enableNavigationSounds = value; }
+        }
         #endregion
 
         #region Constructor
+        public UIMenuOptions(Keys up, Keys down, Keys left, Keys right, Keys acceptKey, bool doNotShowInPauseMenu, bool enableNavigationSounds)
+        {
+            NavigateUp = up;
+            NavigateDown = down;
+            NavigateLeft = left;
+            NavigateRight = right;
+            AcceptKey = acceptKey;
+            DoNotShowInPauseMenu = doNotShowInPauseMenu;
+            EnableNavigationSounds = enableNavigationSounds;
+        }
         public UIMenuOptions(Keys up, Keys down, Keys left, Keys right, Keys acceptKey)
         {
             NavigateUp = up;
@@ -68,6 +99,8 @@ namespace SharpUI.UIMenu {
             NavigateLeft = left;
             NavigateRight = right;
             AcceptKey = acceptKey;
+            DoNotShowInPauseMenu = true;
+            EnableNavigationSounds = true;
         }
         #endregion
 
@@ -78,7 +111,7 @@ namespace SharpUI.UIMenu {
         /// <returns>The default <see cref="UIMenuOptions"/>.</returns>
         public static UIMenuOptions Default()
         {
-            return new UIMenuOptions(Keys.NumPad8, Keys.NumPad2, Keys.NumPad4, Keys.NumPad6, Keys.NumPad5);
+            return new UIMenuOptions(Keys.NumPad8, Keys.NumPad2, Keys.NumPad4, Keys.NumPad6, Keys.NumPad5, true, true);
         }
 
     }

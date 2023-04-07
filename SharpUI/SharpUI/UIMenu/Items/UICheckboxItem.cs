@@ -113,6 +113,16 @@ namespace SharpUI.UIMenu {
         }
         #endregion
 
+        #region Methods
+        private void PlayCheckedChangedSound(UIMenu menu, bool isChecked)
+        {
+            if (isChecked)
+                menu.PlaySound("FRONTEND_MENU_TOGGLE_ON");
+            else
+                menu.PlaySound("FRONTEND_MENU_TOGGLE_OFF");
+        }
+        #endregion
+
         /// <inheritdoc/>
         public override void Draw(UIMenu menu, D3DGraphics gfx, Point pos)
         {
@@ -188,8 +198,30 @@ namespace SharpUI.UIMenu {
                     if (args.KeyCode == menu.Options.AcceptKey)
                     {
                         IsChecked = !IsChecked;
+                        PlayCheckedChangedSound(menu, IsChecked);
                         OnClick?.Invoke(menu, this);
                     }
+                }
+            }
+            else
+            {
+                if (args.KeyCode == menu.Options.AcceptKey)
+                    menu.PlayErrorSound();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override void PerformClick(UIMenu parentMenu, bool ignoreEnabledState)
+        {
+            if (ignoreEnabledState)
+            {
+                OnClick?.Invoke(parentMenu, this);
+            }
+            else
+            {
+                if (IsEnabled)
+                {
+                    OnClick?.Invoke(parentMenu, this);
                 }
             }
         }
