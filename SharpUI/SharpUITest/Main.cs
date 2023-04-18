@@ -40,6 +40,7 @@ namespace SharpUITest {
         #endregion
 
         private UIButton btn;
+        private UIProgressBar progressBar;
 
         private void Main_Initialized(object sender, EventArgs e)
         {
@@ -68,11 +69,20 @@ namespace SharpUITest {
 
 
             // Create a new UIButton
-            btn = new UIButton("Click me!", null, new Size(300, 100), (UIButton button) => { ShowSubtitleMessage("Button clicked!"); });
+            btn = new UIButton("Click me!", null, new Size(300, 100), (UIButton button) => { ShowSubtitleMessage("Button clicked!"); progressBar.Value = 1; });
             btn.Position = new Point(10, 10);
             pool.Items.Add(btn); // Add btn to UIPool
 
-            // Activate the IVSDK .NET mouse for the button
+            // Create a new UIProgressBar
+            progressBar = new UIProgressBar(new Size(1000, 20));
+            progressBar.OnSliderValueChanged += delegate { btn.Text = progressBar.Value.ToString(); };
+            progressBar.Position = new Point(20, 150);
+            progressBar.IsSlider = true;
+            progressBar.Maximum = 100;
+            progressBar.Value = 50;
+            pool.Items.Add(progressBar);
+
+            // Activate the IVSDK .NET mouse for the button and progressbar
             CGame.Mouse.IsVisible = true;
 
 

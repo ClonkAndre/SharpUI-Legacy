@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="UIBase.cs" />
     <Compile Include="UIForms\UIButton.cs" />
+    <Compile Include="UIForms\UIProgressBar.cs" />
     <Compile Include="UIMenu\Items\UINumberUpDownItem.cs" />
     <Compile Include="UIMenu\Items\UICheckboxItem.cs" />
     <Compile Include="UIMenu\Items\UIDoubleUpDownItem.cs" />

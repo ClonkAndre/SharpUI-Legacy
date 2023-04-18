@@ -766,10 +766,12 @@ namespace SharpUI.UIForms
             }
 
             // Draw Shadow
-            if (HasShadow) gfx.DrawBoxFilled(new Vector2(ButtonRectangle.X + ShadowOffset, ButtonRectangle.Y + ShadowOffset), new SizeF(!ShowBorder ? ButtonRectangle.Width : ButtonRectangle.Width + BorderThickness, !ShowBorder ? ButtonRectangle.Height : ButtonRectangle.Height + BorderThickness), Color.Black);
+            if (HasShadow)
+                gfx.DrawBoxFilled(new Vector2(ButtonRectangle.X + ShadowOffset, ButtonRectangle.Y + ShadowOffset), new SizeF(!ShowBorder ? ButtonRectangle.Width : ButtonRectangle.Width + BorderThickness, !ShowBorder ? ButtonRectangle.Height : ButtonRectangle.Height + BorderThickness), Color.Black);
 
             // Draw Border
-            if (ShowBorder) gfx.DrawBox(new Vector2(ButtonRectangle.X, ButtonRectangle.Y), new SizeF(ButtonRectangle.Width, ButtonRectangle.Height), BorderThickness, BorderColor);
+            if (ShowBorder)
+                gfx.DrawBox(new Vector2(ButtonRectangle.X, ButtonRectangle.Y), new SizeF(ButtonRectangle.Width, ButtonRectangle.Height), BorderThickness, BorderColor);
 
             // Draw Button
             gfx.DrawBoxFilled(new Vector2(ButtonRectangle.X, ButtonRectangle.Y), new SizeF(ButtonRectangle.Width, ButtonRectangle.Height), backgroundColor);
